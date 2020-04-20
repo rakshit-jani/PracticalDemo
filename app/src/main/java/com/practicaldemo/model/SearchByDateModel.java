@@ -11,7 +11,7 @@ public class SearchByDateModel {
      * nbPages : 50
      * hitsPerPage : 20
      * exhaustiveNbHits : false
-     * query : 
+     * query :
      * params : advancedSyntax=true&analytics=true&analyticsTags=backend&page=1&tags=story
      * processingTimeMS : 3
      */

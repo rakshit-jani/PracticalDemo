@@ -1,10 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:text="Practical demo"
+            android:textSize="@dimen/_16ssp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_12sdp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/switch_counter"
+            android:layout_width="?actionBarSize"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/_16ssp"
+            android:gravity="center"
+            android:textColor="@android:color/white"/>
+
+
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</RelativeLayout>
+</LinearLayout>

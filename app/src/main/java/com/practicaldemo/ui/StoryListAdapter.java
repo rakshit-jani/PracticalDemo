@@ -1,6 +1,7 @@
 package com.practicaldemo.ui;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.practicaldemo.R;
 import com.practicaldemo.model.HitsBean;
-import com.practicaldemo.model.SearchByDateModel;
 import com.practicaldemo.paging.SearchByDayPaging;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class StoryListAdapter extends
@@ -25,7 +26,7 @@ public class StoryListAdapter extends
     private List<HitsBean> list;
     private SearchByDayPaging ref;
 
-    public StoryListAdapter(SearchByDayPaging ref,Context context) {
+    public StoryListAdapter(SearchByDayPaging ref, Context context) {
         this.context = context;
         this.ref = ref;
         this.list = new ArrayList<>();
@@ -33,12 +34,13 @@ public class StoryListAdapter extends
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView list_item_title;
+        TextView list_item_title, list_item_created_time;
         Switch story_list_switch;
 
         public ViewHolder(View itemView) {
             super(itemView);
             list_item_title = itemView.findViewById(R.id.list_item_title);
+            list_item_created_time = itemView.findViewById(R.id.list_item_created_time);
             story_list_switch = itemView.findViewById(R.id.story_list_switch);
         }
 
@@ -70,7 +72,17 @@ public class StoryListAdapter extends
     public void onBindViewHolder(ViewHolder holder, int position) {
         HitsBean item = list.get(position);
 
-        holder.list_item_title.setText(item.getTitle());
+        if (item.getTitle() != null && item.getTitle().length() > 0) {
+            holder.list_item_title.setText(item.getTitle());
+        } else {
+            holder.list_item_title.setText("");
+        }
+
+        if (item.getCreated_at_i() != 0) {
+            holder.list_item_created_time.setText(DateFormat.format("yyyy-MM-dd hh:mm:ss a", new Date(item.getCreated_at_i())));
+        } else {
+            holder.list_item_created_time.setText("");
+        }
 
         holder.story_list_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -88,10 +100,10 @@ public class StoryListAdapter extends
     }
 
     public void addList(List<HitsBean> list) {
-        if (list != null ) {
+        if (list != null) {
             if (this.list != null) {
                 this.list.clear();
-            }else {
+            } else {
                 this.list = new ArrayList<>();
             }
             this.list.addAll(list);

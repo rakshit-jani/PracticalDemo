@@ -4,24 +4,47 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/list_item_title"
+    <RelativeLayout
+        android:id="@+id/list_item_ll"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/_15sdp"
         app:layout_constraintEnd_toStartOf="@id/story_list_switch_rv"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/list_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/list_item_created_time_lbl"
+            android:layout_width="wrap_content"
+            android:text="Created at: "
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_below="@+id/list_item_title"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/list_item_created_time"
+            android:layout_width="wrap_content"
+            android:layout_toEndOf="@id/list_item_created_time_lbl"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_below="@+id/list_item_title"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
 
 
     <RelativeLayout
         android:id="@+id/story_list_switch_rv"
         android:layout_width="@dimen/_45sdp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/list_item_title"
+        app:layout_constraintBottom_toBottomOf="@id/list_item_ll"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/list_item_title"
-        app:layout_constraintTop_toTopOf="@id/list_item_title">
+        app:layout_constraintStart_toEndOf="@id/list_item_ll"
+        app:layout_constraintTop_toTopOf="@id/list_item_ll">
 
         <Switch
             android:id="@+id/story_list_switch"

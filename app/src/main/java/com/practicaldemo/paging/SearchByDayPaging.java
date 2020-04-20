@@ -8,12 +8,17 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.practicaldemo.R;
 import com.practicaldemo.api.APICallingInterface;
 import com.practicaldemo.api.RetrofitAPIClient;
+import com.practicaldemo.model.HitsBean;
 import com.practicaldemo.model.SearchByDateModel;
 import com.practicaldemo.ui.MainActivity;
 import com.practicaldemo.ui.StoryListAdapter;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,6 +28,7 @@ public class SearchByDayPaging {
 
     ProgressDialog progressDialog;
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefresh;
     private MainActivity context;
     private int lastPage = 0;
     private StoryListAdapter storyListAdapter;
@@ -30,6 +36,7 @@ public class SearchByDayPaging {
     public SearchByDayPaging(MainActivity context, RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
         this.context = context;
+        swipeRefresh = context.findViewById(R.id.swipeRefresh);
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Loading...");
         storyListAdapter = new StoryListAdapter(this,context);
@@ -49,6 +56,15 @@ public class SearchByDayPaging {
                 }
             }
         });
+
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                lastPage = 0;
+                storyListAdapter.addList(new ArrayList<HitsBean>());
+                getStories();
+            }
+        });
     }
 
     private void getStories() {
@@ -62,6 +78,7 @@ public class SearchByDayPaging {
                         storyListAdapter.updateList(response.body().getHits());
                     }
                 }
+                swipeRefresh.setRefreshing(false);
                 progressDialog.dismiss();
             }
 
